@@ -1,0 +1,10 @@
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{Benaroya05}
+H.~Benaroya and S.~M. Han.
+\newblock {\em Probability Models in Engineering and Science}.
+\newblock CRC Press, Taylor and Francis Group, 2005.
+\newblock Refer to page 168 for derivation of mean and variance of a general
+  function of N RVs.
+
+\end{thebibliography}

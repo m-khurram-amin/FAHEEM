@@ -1,0 +1,221 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{lineno}
+\usepackage{physics}
+\usepackage{comment}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\newcommand{\ignore}[1]{}
+
+% \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+\begin{document}
+
+
+%%%%%%%%% TITLE
+\title{Bluetooth MAC Spoofing System}
+
+\author{First Author\\
+Institution1\\
+Institution1 address\\
+{\tt\small firstauthor@i1.org}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Second Author\\
+Institution2\\
+First line of institution2 address\\
+{\tt\small secondauthor@i2.org}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   
+\end{abstract}
+
+%------------------------------------------------------------------------
+%------------------------------------------------------------------------
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+% \subsection{MAC Addresses}
+% MAC addresses are the machine addresses that are used to uniquely address a device connected to network. These addresses are of 48-bit lenght and are unique globally. No two devices can have same MAC address, theoretically, and one network card will have a fixed MAC address. Some examples of technologies which use such addressing sceheme are Bluetooth, WiFi, LAN etcetra.
+% These addresses are communicated to the other devices in packet payloads whenever communication happens in two devices. Bluetooth and WiFi devices even use them in broadcast messages intended to find other machines to create a network. 
+
+% \subsection{MAC Spoofing}
+% Since MAC address remains the same for a given network card and are being advertised to connect with other devices, this fact can be utilized to gather MAC address broadcasts in a given area using a spoofing device. Such devices are called MAC spoofers.
+
+% \subsection{Bleutooth MAC Spoofing System}
+% Bleutooth MAC Spoofing System (BMS) is a device that sniffs for the broadcasts happening in a given spatial area over time. It gathers the MAC addresses of advertising devices and stamp them with time instance when these advertising packets wererecevied. A mesh of such devices installed over a wider spatial area can be used to measure the spatio-temporal-changes of devices.
+
+% \subsection{BMS for Traffic Monitoring}
+% If two BMS are installed at two ends of a road segment and a vehicle, with an EVER ADVERITISNG bluetooth device, passes by these two devices then the packets received by these two BMS can be used to measure the spatio-temporal change in the position of vehicle. Such data gathered from a number of vehicles can be utilized to measure the STATE of road-segment. 
+
+%------------------------------------------------------------------------
+%------------------------------------------------------------------------
+\section{How to measure Speed using two BMS}
+We know that speed is
+
+\begin{equation}
+   speed = \frac{\text{distance covered}}{\text{time taken}}
+\end{equation}
+
+From Figure [1] it can be seen that \(\text{distance covered} = \text{distance between point A \& point B}\) whereas \(\text{time taken} = \text{time taken to travel from point A to point B.}\) By putting the values of \textbf{distance covered} and \textbf{time taken} from Figure[1] in equation[1] we get
+\begin{equation}
+   speed = \frac{ \hat{d} - R_2 + R_1 }{ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) }  
+\end{equation}
+whereas,  $\hat{d}$ is distance between two sites. $R_1$ \& $R_2$ is range of site 1 and site 2, respectively. $\hat{t_1}$ \& $\hat{t_2}$ is Timestamp of detection of first packet at site 1 and site 2, respectively. $T_1$ \& $T_2$ is time till first detection after entering into the range of site 1 and site 2, respectively. 
+
+For a single pass of a vehicle from site 1 to site 2, $\hat{d}$, $\hat{t_1}$ and $\hat{t_2}$ are constants. Whereas, $R_1$, $R_2$, and $T_1$, $T_2$ are random variables. Hence we need to compute the Expected value of speed.
+
+\begin{equation}
+   E[speed] = E\bigg[ \frac{ \hat{d} - R_2 + R_1 }{ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) } \bigg]
+\end{equation}
+
+\begin{equation}
+   var[speed] = var\bigg[ \frac{ \hat{d} - R_2 + R_1 }{ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) } \bigg] 
+\end{equation}
+
+Equation [5] and [6] can be written as 
+\begin{equation}
+   E[Z] = E\bigg[\frac{X}{Y}\bigg]
+\end{equation}
+and
+\begin{equation} 
+   var[Z] = var\bigg[\frac{X}{Y}\bigg]
+\end{equation}
+
+whereas \( X = \hat{d} - R_2 + R_1 \), \( Y = (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) \) and \( Z = speed\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of E(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Computing E[Z] and VAR[Z]}
+
+If random variable Y is an arbitrary non-linear function of two random variables $X_1, X_2$ 
+\begin{equation}
+   Y = g(X_1, X_2)
+\end{equation}
+
+Then Taylor Series Expansion of Y around mean, $\mu_1, \mu_2$, will be
+\begin{equation}
+\label{Taylor_Expansion_of_G}
+\begin{split}
+   Y &= g(\mu_1, \mu_2) \\ &+ (X_1-\mu_1)\dv[]{g}{X_1}\bigg|_{\mu_1,\mu_2}+ (X_2-\mu_2)\dv[ ]{g}{X_2}\bigg|_{\mu_1,\mu_2}+ \\ &+ \frac{(X_1-\mu_1)^2}{2!}\dv[2]{g}{X_1}\bigg|_{\mu_1,\mu_2}+ \frac{(X_2-\mu_2)^2}{2!}\dv[2]{g}{X_2}\bigg|_{\mu_1,\mu_2} \\ &+ (X_1-\mu_1)(X_2-\mu_2)\pdv[]{g}{X_1}{X_2}\bigg|_{\mu_1,\mu_2} + ...
+\end{split}
+\end{equation}
+
+If, \( g(X, Y) = \frac{X}{Y} \) then,
+
+\begin{subequations}
+\label{values_of_g}
+\begin{align}
+   g(\mu_X,\mu_Y) &= \frac{\mu_X}{\mu_Y} \\
+   \pdv[1]{g}{X}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{1}{Y}\bigg|_{\mu_X,\mu_Y} \\ &} &= \frac{1}{\mu_Y} \\
+   \pdv[1]{g}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{&= \frac{(0)(Y) - (1)(X)}{Y^2}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{-\mu_X}{\mu_Y^2} \\
+   \pdv[2]{g}{X}\bigg|_{\mu_X,\mu_Y} &= 0 \\
+   \pdv[2]{g}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{(0)(Y)-(2Y)(-X)}{Y^4}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{2\mu_X}{\mu_Y^3} \\
+   \pdv[]{g}{X}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{(0)(Y)-(1)(1)}{Y^2}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{-1}{\mu_Y^2} 
+\end{align}
+\end{subequations}
+
+By putting the values from equation \ref{values_of_g} into \ref{Taylor_Expansion_of_G}
+\begin{equation}
+\begin{split}
+   g(X,Y) &= \frac{\mu_X}{\mu_Y} +  \frac{1}{\mu_Y} (X-\mu_X) - \frac{\mu_X}{\mu_Y^2}(Y-\mu_Y) \\ & + \frac{\mu_X}{\mu_Y^3} (Y-\mu_Y)^2 - \frac{1}{\mu_Y^2} (X-\mu_X)(Y-\mu_Y)  + ...
+\end{split}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of E(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+Second order approximation of \(E[g(X,Y)]\) is,
+\begin{equation}
+\begin{split}
+   E\bigg[\frac{X}{Y}\bigg] &\approx \ignore{\frac{\mu_X}{\mu_Y} + \frac{1}{\mu_Y} E[X-\mu_X]  - \frac{\mu_X}{\mu_Y^2} E[Y-\mu_Y] \\ & + \frac{\mu_X}{\mu_Y^3} E[(Y-\mu_Y)^2] - \frac{1}{\mu_Y^2} E[(X-\mu_X)(Y-\mu_Y)] \\ &=} \frac{\mu_X}{\mu_Y} + \frac{\mu_X}{\mu_Y^3} var[Y]  - \frac{1}{\mu_Y^2} cov[X,Y]
+\end{split}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of VAR(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+Similarly, first-order approximation of  \(var[g(X,Y)]\) is,
+\begin{equation}
+\begin{split}
+   var\bigg[\frac{X}{Y}\bigg] &\approx \frac{var[X]}{\mu_Y^2} - \frac{2\mu_X}{\mu_Y^3}cov[X,Y] + \frac{\mu_X^2}{\mu_Y^4}var[Y]
+\end{split}
+\end{equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% E(X) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{equation}
+\begin{split}
+   E[X] &= \ignore{E[\hat{d} - R_2 + R_1] \\ &= E[\hat{d} + (-R_2) + R_1] \\ &= E[\hat{d}] + E[-R_2] + E[R_1] \\ &= E[\hat{d}] - E[R_2] + E[R_1]} \hat{d} - E[R_2] + E[R_1]
+\end{split}
+\end{equation}
+% since $\hat{d}$ is constant so $E[\hat{d}]=\hat{d}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% E(Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{equation}
+\begin{split}
+   E[Y] &= \ignore{E[ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) ] \\ &= E[\hat{t_2} + (-T_2) + (-\hat{t_1}) + T_1 )] \\ &= E[\hat{t_2}] + E[-T_2] + E[-\hat{t_1}] + E[T_1] \\ &= E[\hat{t_2}] - E[T_2] - E[\hat{t_1}] + E[T_1] \\ &= \hat{t_2} - E[T_2] - \hat{t_1} + E[T_1] \\ &=} ( \hat{t_2} - \hat{t_1} ) - ( E[T_2] - E[T_1] )
+\end{split}
+\end{equation}
+% since $\hat{t_2}$ and $\hat{t_1}$ are constants for a given iteration so $E[\hat{t_1}]=\hat{t_1}$ and $E[\hat{t_2}]=\hat{t_2}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VAR(X) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+\begin{split}
+   var[X] &= \ignore{var[\hat{d} - R_2 + R_1] \\ &= var[\hat{d} + (-R_2) + R_1] \\ &= var[\hat{d}] + var[-R_2] + var[R_1] \\ &= var[\hat{d}] + var[R_2] + var[R_1] \\ &=} var[R_1] + var[R_2]
+\end{split}
+\end{equation}
+% since $\hat{d}$ is a constant, so its variance is zero.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VAR(Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+\begin{split}
+   var[Y] &= \ignore{var[ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) ] \\ &= var[\hat{t_2} + (-T_2) + (-\hat{t_1}) + T_1 )] \\ &= var[\hat{t_2}] + var[-T_2] + var[-\hat{t_1}] + var[T_1] \\ &= var[\hat{t_2}] + var[T_2] + var[\hat{t_1}] + var[T_1] \\ &=} var[T_1] + var[T_2] 
+\end{split}
+\end{equation}
+% since $var[X] = var[-X]$ and $var[\hat{t_1}]=var[\hat{t_2}]=0$ since $\hat{t_1}$ and $\hat{t_2}$ are constants.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% COV(X,Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+\begin{split}
+   cov[X,Y] \ignore{&= E[(X-E[X])(Y-E[Y])] \\ &= E[((\hat{d}-R_2+R_1)-E[\hat{d}-R_2+R_1]) \\ &(\hat{t_2}-T_2-\hat{t_1}+T_1)-E[\hat{t_2}-T_2-\hat{t_1}+T_1]) ] \\ &= E[(\hat{d}-R_2+R_1-\hat{d}+E[R_2]-E[R_1]) \\ &(\hat{t_2}-T_2-\hat{t_1}+T_1-\hat{t_2}+E[T_2]+\hat{t_1}-E[T_1])] \\ &= E[(-R_2+R_1+E[R_2]-E[R_1]) \\ &(-T_2+T_1+E[T_2]-E[T_1])] \\ &= E[R_2T_2-R_2T_1-R_2E[T_2]+R_2E[T_1] \\ &-R_1T_2+R_1T_1+R_1E[T_2]-R_1E[T_1] \\ &-E[R_2]T_2+E[R_2]T_1+E[R_2]E[T_2]-E[R_2]E[T_1] \\ &+E[R_1]T_2-E[R_1]T_1-E[R_1]E[T_2]+E[R_1]E[T_1] ] \\ &= E[R_2T_2]-E[R_2T_1]-E[R_2]E[T_2]+E[R_2]E[T_1] \\ &-E[R_1T_2]+E[R_1T_1]+E[R_1]E[T_2]-E[R_1]E[T_1] \\ & -E[R_2]E[T_2]+E[R_2]E[T_1]+E[R_2]E[T_2]-E[R_2]E[T_1] \\ &+E[R_1]E[T_2]-E[R_1]E[T_1]-E[R_1]E[T_2]+E[R_1]E[T_1] \\ &= E[R_2T_2]-E[R_2]E[T_2] \\ &-E[R_2T_1]+E[R_2]E[T_1] \\ &-E[R_1T_2]+E[R_1]E[T_2] \\ &+E[R_1T_1]-E[R_1]E[T_1] \\ &= E[R_2T_2]-E[R_2]E[T_2]+E[R_1T_1]-E[R_1]E[T_1] \\} &= cov[R_1, T_1] + cov[R_2, T_2]
+\end{split}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% COV(RANGE,TIME TILL DEVICE DISCOVERY) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Computing \textbf{\textit{COV[RANGE, TTDD]}}}
+This is a citation \cite{Benaroya05} and it is showing up. But I cannot add page numbers. one wonders why?
+
+
+%------------------------------------------------------------------------
+%------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egpaper_for_review.bib}
+}
+
+\end{document}
