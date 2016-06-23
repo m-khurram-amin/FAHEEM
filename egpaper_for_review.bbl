@@ -7,4 +7,15 @@ H.~Benaroya and S.~M. Han.
 \newblock Refer to page 168 for derivation of mean and variance of a general
   function of N RVs.
 
+\bibitem{chakraborty2010}
+G.~Chakraborty, K.~Naik, D.~Chakraborty, N.~Shiratori, and D.~Wei.
+\newblock Analysis of the bluetooth device discovery protocol.
+\newblock {\em Wireless Networks}, 16(2):421--436, 2010.
+
+\bibitem{Andrea05}
+A.~Goldsmith.
+\newblock {\em Wireless Communications}.
+\newblock Cambridge University Press, 2005.
+\newblock Refer to page 28 for Free-Space path losses.
+
 \end{thebibliography}

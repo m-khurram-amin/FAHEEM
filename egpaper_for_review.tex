@@ -18,6 +18,7 @@
 \usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
 \newcommand{\ignore}[1]{}
+\newcommand{\expnumber}[2]{{#1}\mathrm{e}{#2}}
 
 % \cvprfinalcopy % *** Uncomment this line for the final submission
 
@@ -76,7 +77,7 @@ First line of institution2 address\\
 
 %------------------------------------------------------------------------
 %------------------------------------------------------------------------
-\section{How to measure Speed using two BMS}
+\section{How to measure $speed$ using two BMS}
 We know that speed is
 
 \begin{equation}
@@ -100,25 +101,25 @@ For a single pass of a vehicle from site 1 to site 2, $\hat{d}$, $\hat{t_1}$ and
 \end{equation}
 
 Equation [5] and [6] can be written as 
-\begin{equation}
+\begin{equation*}
    E[Z] = E\bigg[\frac{X}{Y}\bigg]
-\end{equation}
+\end{equation*}
 and
-\begin{equation} 
+\begin{equation*} 
    var[Z] = var\bigg[\frac{X}{Y}\bigg]
-\end{equation}
+\end{equation*}
 
 whereas \( X = \hat{d} - R_2 + R_1 \), \( Y = (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) \) and \( Z = speed\).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of E(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Computing E[Z] and VAR[Z]}
+\subsection{Computing $E[Z]$ and $var[Z]$}
 
 If random variable Y is an arbitrary non-linear function of two random variables $X_1, X_2$ 
 \begin{equation}
    Y = g(X_1, X_2)
 \end{equation}
 
-Then Taylor Series Expansion of Y around mean, $\mu_1, \mu_2$, will be
+then Taylor Series Expansion of Y around mean, $\mu_1, \mu_2$ will be \cite{Benaroya05}
 \begin{equation}
 \label{Taylor_Expansion_of_G}
 \begin{split}
@@ -128,19 +129,6 @@ Then Taylor Series Expansion of Y around mean, $\mu_1, \mu_2$, will be
 
 If, \( g(X, Y) = \frac{X}{Y} \) then,
 
-\begin{subequations}
-\label{values_of_g}
-\begin{align}
-   g(\mu_X,\mu_Y) &= \frac{\mu_X}{\mu_Y} \\
-   \pdv[1]{g}{X}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{1}{Y}\bigg|_{\mu_X,\mu_Y} \\ &} &= \frac{1}{\mu_Y} \\
-   \pdv[1]{g}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{&= \frac{(0)(Y) - (1)(X)}{Y^2}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{-\mu_X}{\mu_Y^2} \\
-   \pdv[2]{g}{X}\bigg|_{\mu_X,\mu_Y} &= 0 \\
-   \pdv[2]{g}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{(0)(Y)-(2Y)(-X)}{Y^4}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{2\mu_X}{\mu_Y^3} \\
-   \pdv[]{g}{X}{Y}\bigg|_{\mu_X,\mu_Y} \ignore{& = \frac{(0)(Y)-(1)(1)}{Y^2}\bigg|_{\mu_X,\mu_Y}\\ &} &= \frac{-1}{\mu_Y^2} 
-\end{align}
-\end{subequations}
-
-By putting the values from equation \ref{values_of_g} into \ref{Taylor_Expansion_of_G}
 \begin{equation}
 \begin{split}
    g(X,Y) &= \frac{\mu_X}{\mu_Y} +  \frac{1}{\mu_Y} (X-\mu_X) - \frac{\mu_X}{\mu_Y^2}(Y-\mu_Y) \\ & + \frac{\mu_X}{\mu_Y^3} (Y-\mu_Y)^2 - \frac{1}{\mu_Y^2} (X-\mu_X)(Y-\mu_Y)  + ...
@@ -148,66 +136,107 @@ By putting the values from equation \ref{values_of_g} into \ref{Taylor_Expansion
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of E(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-Second order approximation of \(E[g(X,Y)]\) is,
-\begin{equation}
-\begin{split}
-   E\bigg[\frac{X}{Y}\bigg] &\approx \ignore{\frac{\mu_X}{\mu_Y} + \frac{1}{\mu_Y} E[X-\mu_X]  - \frac{\mu_X}{\mu_Y^2} E[Y-\mu_Y] \\ & + \frac{\mu_X}{\mu_Y^3} E[(Y-\mu_Y)^2] - \frac{1}{\mu_Y^2} E[(X-\mu_X)(Y-\mu_Y)] \\ &=} \frac{\mu_X}{\mu_Y} + \frac{\mu_X}{\mu_Y^3} var[Y]  - \frac{1}{\mu_Y^2} cov[X,Y]
-\end{split}
-\end{equation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%% Taylor Series Expension of VAR(X/Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-Similarly, first-order approximation of  \(var[g(X,Y)]\) is,
-\begin{equation}
-\begin{split}
+Second order approximation of \(E[g(X,Y)]\) and first-order approximation of  \(var[g(X,Y)]\) is \cite{Benaroya05},
+\begin{subequations}
+\begin{align}
+\label{expected_value_of_speed}
+   E\bigg[\frac{X}{Y}\bigg] &\approx \frac{\mu_X}{\mu_Y} + \frac{\mu_X}{\mu_Y^3} var[Y]  - \frac{1}{\mu_Y^2} cov[X,Y] \\
+\label{variance_of_speed}
    var\bigg[\frac{X}{Y}\bigg] &\approx \frac{var[X]}{\mu_Y^2} - \frac{2\mu_X}{\mu_Y^3}cov[X,Y] + \frac{\mu_X^2}{\mu_Y^4}var[Y]
-\end{split}
-\end{equation}
+\end{align}
+\end{subequations}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% E(X) %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% VAlues of ABOVE THING %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{equation}
-\begin{split}
-   E[X] &= \ignore{E[\hat{d} - R_2 + R_1] \\ &= E[\hat{d} + (-R_2) + R_1] \\ &= E[\hat{d}] + E[-R_2] + E[R_1] \\ &= E[\hat{d}] - E[R_2] + E[R_1]} \hat{d} - E[R_2] + E[R_1]
-\end{split}
-\end{equation}
-% since $\hat{d}$ is constant so $E[\hat{d}]=\hat{d}$
+\begin{subequations}
+\begin{align}
+   E[X] &= \hat{d} - E[R_2] + E[R_1] \\
+   E[Y] &= ( \hat{t_2} - \hat{t_1} ) - ( E[T_2] - E[T_1] ) \\
+   var[X] &= var[R_1] + var[R_2] \\
+   var[Y] &= var[T_1] + var[T_2] \\
+   cov[X,Y] &= cov[R_1, T_1] + cov[R_2, T_2]
+\end{align}
+\end{subequations}
+since $\hat{d}$, $\hat{t_1}$ and $\hat{t_2}$ are constants, $var[X] = var[-X]$, $R_1$ \& $R_2$ are independent, both sites are well seperated so $T_1$ \& $T_2$ are independent, $R_1$, $T_2$ and $R_2$, $T_1$ are independent.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%% E(Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{equation}
-\begin{split}
-   E[Y] &= \ignore{E[ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) ] \\ &= E[\hat{t_2} + (-T_2) + (-\hat{t_1}) + T_1 )] \\ &= E[\hat{t_2}] + E[-T_2] + E[-\hat{t_1}] + E[T_1] \\ &= E[\hat{t_2}] - E[T_2] - E[\hat{t_1}] + E[T_1] \\ &= \hat{t_2} - E[T_2] - \hat{t_1} + E[T_1] \\ &=} ( \hat{t_2} - \hat{t_1} ) - ( E[T_2] - E[T_1] )
-\end{split}
-\end{equation}
-% since $\hat{t_2}$ and $\hat{t_1}$ are constants for a given iteration so $E[\hat{t_1}]=\hat{t_1}$ and $E[\hat{t_2}]=\hat{t_2}$
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%% VAR(X) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{equation}
-\begin{split}
-   var[X] &= \ignore{var[\hat{d} - R_2 + R_1] \\ &= var[\hat{d} + (-R_2) + R_1] \\ &= var[\hat{d}] + var[-R_2] + var[R_1] \\ &= var[\hat{d}] + var[R_2] + var[R_1] \\ &=} var[R_1] + var[R_2]
-\end{split}
-\end{equation}
-% since $\hat{d}$ is a constant, so its variance is zero.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%% VAR(Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{equation}
-\begin{split}
-   var[Y] &= \ignore{var[ (\hat{t_2} - T_2 ) - (\hat{t_1} - T_1 ) ] \\ &= var[\hat{t_2} + (-T_2) + (-\hat{t_1}) + T_1 )] \\ &= var[\hat{t_2}] + var[-T_2] + var[-\hat{t_1}] + var[T_1] \\ &= var[\hat{t_2}] + var[T_2] + var[\hat{t_1}] + var[T_1] \\ &=} var[T_1] + var[T_2] 
-\end{split}
-\end{equation}
-% since $var[X] = var[-X]$ and $var[\hat{t_1}]=var[\hat{t_2}]=0$ since $\hat{t_1}$ and $\hat{t_2}$ are constants.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%% COV(X,Y) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{equation}
-\begin{split}
-   cov[X,Y] \ignore{&= E[(X-E[X])(Y-E[Y])] \\ &= E[((\hat{d}-R_2+R_1)-E[\hat{d}-R_2+R_1]) \\ &(\hat{t_2}-T_2-\hat{t_1}+T_1)-E[\hat{t_2}-T_2-\hat{t_1}+T_1]) ] \\ &= E[(\hat{d}-R_2+R_1-\hat{d}+E[R_2]-E[R_1]) \\ &(\hat{t_2}-T_2-\hat{t_1}+T_1-\hat{t_2}+E[T_2]+\hat{t_1}-E[T_1])] \\ &= E[(-R_2+R_1+E[R_2]-E[R_1]) \\ &(-T_2+T_1+E[T_2]-E[T_1])] \\ &= E[R_2T_2-R_2T_1-R_2E[T_2]+R_2E[T_1] \\ &-R_1T_2+R_1T_1+R_1E[T_2]-R_1E[T_1] \\ &-E[R_2]T_2+E[R_2]T_1+E[R_2]E[T_2]-E[R_2]E[T_1] \\ &+E[R_1]T_2-E[R_1]T_1-E[R_1]E[T_2]+E[R_1]E[T_1] ] \\ &= E[R_2T_2]-E[R_2T_1]-E[R_2]E[T_2]+E[R_2]E[T_1] \\ &-E[R_1T_2]+E[R_1T_1]+E[R_1]E[T_2]-E[R_1]E[T_1] \\ & -E[R_2]E[T_2]+E[R_2]E[T_1]+E[R_2]E[T_2]-E[R_2]E[T_1] \\ &+E[R_1]E[T_2]-E[R_1]E[T_1]-E[R_1]E[T_2]+E[R_1]E[T_1] \\ &= E[R_2T_2]-E[R_2]E[T_2] \\ &-E[R_2T_1]+E[R_2]E[T_1] \\ &-E[R_1T_2]+E[R_1]E[T_2] \\ &+E[R_1T_1]-E[R_1]E[T_1] \\ &= E[R_2T_2]-E[R_2]E[T_2]+E[R_1T_1]-E[R_1]E[T_1] \\} &= cov[R_1, T_1] + cov[R_2, T_2]
-\end{split}
-\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% COV(RANGE,TIME TILL DEVICE DISCOVERY) %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Computing \textbf{\textit{COV[RANGE, TTDD]}}}
-This is a citation \cite{Benaroya05} and it is showing up. But I cannot add page numbers. one wonders why?
+\subsection{Computing $COV[RANGE, TTDD]$ }
+\textbf{Assumption:} \textit{Range} and \textit{Time Till Device Discovery} are independent. Hence \( cov[range,ttdd] = 0.\)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% RANGE %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Range}
+Range of a site is a function of antenna-type and enviornment of a particular site. More specifically \cite{Andrea05},
+\begin{equation}
+   \frac{P_r}{P_t} = \bigg( \frac{\lambda \sqrt[2]{G_l}}{4\pi d} \bigg)^\gamma
+\end{equation}
+
+$\gamma$ is the enviornment factor (2 for Free-Space\cite{Andrea05}, 2.4 in our-testing-enviornment), $\lambda$ is wavelength (0.125m for 2.4GHz), $G_l$ depends on directionality of antenna (1 for Omni-directional antenna\cite{Andrea05}), $P_r$ is received power in watts ($1 \times 10^{-12}$ for -80dBm), $P_t$ is transmitted power in watts ($3 \times 10^{-3}$ for 5dBm), $d$ is distance between two antennas (corresponds to range for $P_r$ = -90dBm).\\
+For above mention values of variables, the range of antenna turn out to be $\sim88m.$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% TTDD %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Time Till Device Detection}
+TTDD of a site is a function of \textit{time taken by bluetooth protocol to detect a slave device in ideal communiation enviornment} and \textit{number of retires due to noise and packet loss}.
+\begin{equation}
+\begin{split}
+   \text{T} = &\textit{ number of tries} \\ \times &\textit{time till master and slave's frequencies match}
+\end{split}
+\end{equation}
+
+We are going to model \textit{packet loss} with \textit{Geometric Distribution with infinite tries and parameter p},
+\( E[\textit{number of tries}] = \frac{1}{p} \) whereas p is the \textit{probability of an error-free packet transmission from source to destination}.\\
+Whereas, \textit{time till master and slave's frequencies match} is modeled by a \textbf{variant} of \cite{chakraborty2010}. Note that \textit{packet loss} and \textit{time till frequencies match} are both independent variables. So their expected value is the product of their respective expected values.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Mth and Nth Detection %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extending $speed$ estimator to m\textsuperscript{\textbf{th}} and n\textsuperscript{\textbf{th}} detections }
+From Figure [2] it can be seen that previously build estimator of $speed$ for first-to-first detection can be extended to m\textsuperscript{th} detection of site 1 and n\textsuperscript{th} detection of site 2. Putting values from Figure[2] in equation[1] we get
+\begin{equation}
+   speed_{mn} = \frac{ \hat{d} - R_2 + R_1 }{ (\hat{t}_{2n} - \hat{t}_{1m} ) - ( nT_2 - mT_1 ) }  
+\end{equation}
+
+\begin{subequations}
+\begin{align}
+   \label{expected_value_of_distance}
+   E[distance] &= \hat{d} - E[R_2] + E[R_1] \\
+   \label{expected_value_of_time}
+   E[time] &= ( \hat{t}_{2n} - \hat{t}_{1m} ) - ( nE[T_2] - mE[T_1] ) \\
+   \label{variance_of_distance}
+   var[distance] &= var[R_1] + var[R_2] \\
+   \label{variance_of_time}
+   var[time] &= m^2 \times var[T_1] + n^2 \times var[T_2] \\
+   \label{variance_of_T}
+   var[T] &= var[p] var[TTFM] \\
+   &+ var[p] E[TTFM]^2 + var[TTFM] E[p]^2  \\
+   \label{cov_dist_time} \\
+   cov[distance, time] &= 0, Assumption
+\end{align}
+\end{subequations}
+
+%------------------------------------------------------------------------
+%------------------------------------------------------------------------
+\section{Factors affecting $speed$ estimation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% TTFD %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Time till frequencies match}
+If \textit{time till master and slave's frequencies match} is zero i.e. devices get detected as soon as they enter the antenna range of a device then \( E[TTFM] = var[TTFM] = var[T] = 0 \). From \ref{variance_of_T}, \ref{variance_of_time} and \ref{variance_of_speed}, $var[speed]$ decreases. Even if \( E[TTFM] \neq 0 \) and only \( var[TTFM] = 0 \) even then \(var[speed]\) decreses.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Packet Loss %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Packet Loss}
+If \(P(packet-loss) = fixed \), there is no change in \textit{probability of packet loss}, then \(var[T]\) decreases. From \ref{variance_of_T}, \ref{variance_of_time} and \ref{variance_of_speed}, $var[speed]$ decreases.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Range %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Range of site}
+If range of a site is fixed i.e. there is no change in range of antenna due to any external and internal factors, then \( E[Range] = constand\) and \(var[Range] = 0\). From \ref{variance_of_distance} and  \ref{variance_of_speed}, $var[speed]$ decreases.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% mth and nth entry %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Choice of m \& n for speed calculation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Distance %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distance between sites}
 
 
 %------------------------------------------------------------------------
